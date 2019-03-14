@@ -1,0 +1,1 @@
+Repositório destinado a disciplina de Grafos da UFSC
