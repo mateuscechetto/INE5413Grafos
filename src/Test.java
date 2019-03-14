@@ -11,7 +11,7 @@ public class Test {
 				{1,2},
 				{2,3},
 				};
-		Grafo g = new Grafo(vertices, arestas);
+		GrafoHashMap g = new GrafoHashMap(vertices, arestas);
 		g.print();
 		
 		g.insereVertice(4);
@@ -29,9 +29,9 @@ public class Test {
 		System.out.println("vizinhos do 2");
 		g.imprimeVizinhosDe(2);
 		for(int vertice: vertices) {
-			System.out.println("grau do vertice " + vertice + ": " + g.grau(vertice));
+			System.out.println("grau do vertice " + vertice + ": " + g.getGrau(vertice));
 		}
-		System.out.println("grau do vertice " + 4 + ": " + g.grau(4));
+		System.out.println("grau do vertice " + 4 + ": " + g.getGrau(4));
 
 		
 		g.removeVertice(2);
