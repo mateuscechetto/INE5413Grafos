@@ -11,7 +11,7 @@ public class Test {
 				{0,1},
 				{1,2},
 				};
-		Grafo g = new GrafoMatrizAdjacencia(vertices, arestas);
+		Grafo g = new GrafoHashMap(vertices, arestas);
 		g.print();
 		
 		g.insereVertice(3);

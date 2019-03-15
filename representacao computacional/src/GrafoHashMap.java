@@ -36,19 +36,23 @@ public class GrafoHashMap implements Grafo {
 	}
 	
 	@Override
-	public void insereAresta(int vertice1, int vertice2) {
+	public boolean insereAresta(int vertice1, int vertice2) {
+		if(!this.grafo.containsKey(vertice1) ||
+				!this.grafo.containsKey(vertice2)) return false;
 		this.grafo.get(vertice1).put(vertice2, 1);
-		this.grafo.get(vertice2).put(vertice1, 1);
+		return this.grafo.get(vertice2).put(vertice1, 1) == null;
 	}
 	
 	@Override
 	public boolean ehAdjacente(int vertice1, int vertice2) {
+		if(!this.grafo.containsKey(vertice1)) return false;
 		int valor = this.grafo.get(vertice1).getOrDefault(vertice2, 0);
 		return valor == 1;
 	}
 	
 	@Override
 	public int getGrau(int vertice) {
+		if(!this.grafo.containsKey(vertice)) return -1;
 		return this.grafo.get(vertice).size();
 	}
 	
@@ -61,17 +65,22 @@ public class GrafoHashMap implements Grafo {
 	}
 	
 	@Override
-	public void removeVertice(int vertice) {
+	public boolean removeVertice(int vertice) {
 		HashMap<Integer, Integer> removido = this.grafo.remove(vertice);
+		if(removido == null) return false;
 		for(Integer i: removido.keySet()) {
 			this.grafo.get(i).remove(vertice);
 		}
+		return true;
 	}
 	
 	@Override
-	public void removeAresta(int vertice1, int vertice2) {
+	public boolean removeAresta(int vertice1, int vertice2) {
+		if(!this.grafo.containsKey(vertice1) ||
+			!this.grafo.containsKey(vertice2)) return false;
 		this.grafo.get(vertice1).remove(vertice2);
 		this.grafo.get(vertice2).remove(vertice1);
+		return true;
 	}
 	
 	@Override

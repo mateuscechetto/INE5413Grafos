@@ -51,11 +51,12 @@ public class GrafoMatrizAdjacencia implements Grafo {
 	}
 
 	@Override
-	public void insereAresta(int vertice1, int vertice2) {
+	public boolean insereAresta(int vertice1, int vertice2) {
 		this.matriz[vertice1][vertice2] = 1;
 		this.matriz[vertice1][this.matriz[0].length - 1]++;
 		this.matriz[vertice2][vertice1] = 1;
 		this.matriz[vertice2][this.matriz[0].length - 1]++;
+		return true;
 	}
 
 	@Override
@@ -65,6 +66,7 @@ public class GrafoMatrizAdjacencia implements Grafo {
 
 	@Override
 	public int getGrau(int vertice) {
+		if(vertice >= nVertices) return -1;
 		return this.matriz[vertice][this.matriz[0].length - 1];
 	}
 
@@ -82,16 +84,18 @@ public class GrafoMatrizAdjacencia implements Grafo {
 	}
 
 	@Override
-	public void removeVertice(int vertice) {
-		
+	public boolean removeVertice(int vertice) {
+		return false;
 	}
 
 	@Override
-	public void removeAresta(int vertice1, int vertice2) {
+	public boolean removeAresta(int vertice1, int vertice2) {
+		if(vertice1 >= nVertices || vertice2 > nVertices) return false;
 		this.matriz[vertice1][vertice2] = 0;
 		this.matriz[vertice1][this.matriz[0].length - 1]--;
 		this.matriz[vertice2][vertice1] = 0;
 		this.matriz[vertice2][this.matriz[0].length - 1]--;
+		return true;
 	}
 
 	@Override

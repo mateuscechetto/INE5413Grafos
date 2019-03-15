@@ -10,21 +10,26 @@ public interface Grafo {
 	 * Insere uma aresta no grafo
 	 * @param vertice1 Um vertice da relacao
 	 * @param vertice2 Outro vertice da relacao
+	 * @return true se a aresta foi adicionada;
+	 * 	false se a aresta ja fizesse parte do grafo
+	 * 	ou os vertices nao sejam parte do grafo2q
 	 */
-	public void insereAresta(int vertice1, int vertice2);
+	public boolean insereAresta(int vertice1, int vertice2);
 	
 	/**
 	 * Verifica se dois vertices sao adjacentes
 	 * @param vertice1 Vertice a ser verificado
 	 * @param vertice2 Vertice a ser verificado
-	 * @return true se vertice1 for adjacente a vertice2; false caso contrario
+	 * @return true se vertice1 for adjacente a vertice2;
+	 * 	false caso contrario
 	 */
 	public boolean ehAdjacente(int vertice1, int vertice2);
 	
 	/**
 	 * Calcula o valor do grau de um vertice
 	 * @param vertice Vertice do qual o grau será calculado
-	 * @return valor do grau do vertice
+	 * @return valor do grau do vertice;
+	 *  -1 caso o vertice nao faca parte do grafo
 	 */
 	public int getGrau(int vertice);
 	
@@ -37,15 +42,20 @@ public interface Grafo {
 	/**
 	 * Remove vertice do grafo
 	 * @param vertice vertice a ser removido
+	 * @return true se o vertice foi removido;
+	 * 	false se o vertice nao fizesse parte do grafo 
 	 */
-	public void removeVertice(int vertice);
+	public boolean removeVertice(int vertice);
 	
 	/**
 	 * Remove aresta do grafo
 	 * @param vertice1 Vertice da relacao
 	 * @param vertice2 Outro vertice da relacao
+	 * @return true caso a aresta tenha sido removida; falso caso
+	 * 	a aresta nao faca parte do grafo
 	 */
-	public void removeAresta(int vertice1, int vertice2);
+
+	public boolean removeAresta(int vertice1, int vertice2);
 	
 	/**
 	 * Imprime o grafo no console
