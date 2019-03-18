@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class GrafoMatrizAdjacencia implements Grafo {
 
@@ -106,5 +107,11 @@ public class GrafoMatrizAdjacencia implements Grafo {
 			}
 			System.out.println();
 		}
+	}
+
+	@Override
+	public HashMap<Integer, Integer[]> buscaLargura(int vertice) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.LinkedList;
 
 //ignora caso repetido, entrada null, etc...
 public class GrafoHashMap implements Grafo {
@@ -95,6 +96,35 @@ public class GrafoHashMap implements Grafo {
 			}
 			System.out.println();
 		}
+	}
+
+	@Override
+	public HashMap<Integer, Integer[]> buscaLargura(int vertice) {
+		HashMap<Integer, Integer[]> tabela = new HashMap<>();
+		for(int v: grafo.keySet().toArray(new Integer[0])) {
+			Integer[] setup = {Integer.MAX_VALUE, -1, -1};
+			tabela.put(v,setup);
+		}
+		
+		tabela.get(vertice)[0] = 0;
+		tabela.get(vertice)[2] = 1;
+
+		
+		LinkedList<Integer> fila = new LinkedList<Integer>();
+		fila.add(vertice);
+		
+		while(!fila.isEmpty()) {
+			int antecessor = fila.remove();
+			for(int i: grafo.get(antecessor).keySet()) {
+				if(tabela.get(i)[2] < 0) {
+					tabela.get(i)[2] = 1;
+					tabela.get(i)[0] = tabela.get(antecessor)[0] + 1;
+					tabela.get(i)[1] = antecessor;
+					fila.add(i);
+				}
+			}
+		}
+		return tabela;
 	}
 	
 	

@@ -1,3 +1,4 @@
+import java.util.HashMap;
 
 public interface Grafo {
 	/**
@@ -61,4 +62,16 @@ public interface Grafo {
 	 * Imprime o grafo no console
 	 */
 	public void print();
+	
+	/**
+	 * Realiza busca em largura a partir de um vertice
+	 * @param vertice pelo qual começara a busca
+	 * @return HashMap o qual as chaves sao os vertices,
+	 *  e os valores eh um array o qual 
+	 *  [0] sao as distancias,
+	 *  [1] sao os antecessores
+	 *  [2] sao os verificadores se o vertice foi atingido
+	 */
+	public HashMap<Integer, Integer[]> buscaLargura(int vertice);
+	
 }
