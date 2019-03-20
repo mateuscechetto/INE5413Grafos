@@ -53,6 +53,13 @@ public class Test {
 			System.out.println(": " + tabela.get(v)[0] + " " + tabela.get(v)[1] + " " + tabela.get(v)[2]);
 		}
 		
+		System.out.println("<----------------------------->");
 		
+		tabela = g.buscaProfundidade(0);
+		
+		for(int v: tabela.keySet()) {
+			System.out.print(v);
+			System.out.println(": " + tabela.get(v)[0] + " " + tabela.get(v)[1] + " " + tabela.get(v)[2]);
+		}
 	}
 }

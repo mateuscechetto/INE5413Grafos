@@ -114,4 +114,10 @@ public class GrafoMatrizAdjacencia implements Grafo {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public HashMap<Integer, Integer[]> buscaProfundidade(int vertice) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
