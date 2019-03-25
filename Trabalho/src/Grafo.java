@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Grafo implements IGrafo {
 	
@@ -101,6 +102,41 @@ public class Grafo implements IGrafo {
 			return this.grafo.get(u).get(v);
 		} else {
 			return Double.MAX_VALUE;
+		}
+	}
+	
+	public void buscaLargura(int vertice) {
+		HashMap<Integer, Integer[]> tabela = new HashMap<>();
+		for(int v: grafo.keySet()) {
+			Integer[] setup = {Integer.MAX_VALUE, -1, -1};
+			tabela.put(v,setup);
+		}
+		
+		tabela.get(vertice)[0] = 0;
+		tabela.get(vertice)[2] = 1;
+		int distancia = -1;
+
+		
+		LinkedList<Integer> fila = new LinkedList<Integer>();
+		fila.add(vertice);
+		
+		while(!fila.isEmpty()) {
+			int antecessor = fila.remove();
+			if(distancia != tabela.get(antecessor)[0]) {
+				distancia = tabela.get(antecessor)[0];
+				System.out.println();
+				System.out.print(distancia + ": " + antecessor);
+			} else {
+				System.out.print(", " + antecessor);
+			}
+			for(int i: grafo.get(antecessor).keySet()) {
+				if(tabela.get(i)[2] < 0) {
+					tabela.get(i)[2] = 1;
+					tabela.get(i)[0] = tabela.get(antecessor)[0] + 1;
+					tabela.get(i)[1] = antecessor;
+					fila.add(i);
+				}
+			}
 		}
 	}
 

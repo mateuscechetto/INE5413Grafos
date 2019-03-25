@@ -13,5 +13,7 @@ public class Main {
 		for(int i: vizinhos) {
 			System.out.println(i);
 		}
+		
+		g.buscaLargura(2);
 	}
 }
