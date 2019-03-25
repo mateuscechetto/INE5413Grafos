@@ -15,5 +15,6 @@ public class Main {
 		}
 		
 		g.buscaLargura(2);
+		g.euleriano();
 	}
 }
