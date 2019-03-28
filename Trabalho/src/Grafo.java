@@ -172,23 +172,86 @@ public class Grafo implements IGrafo {
 		return tabela;
 	}
 	
-	public int euleriano() {
-		HashMap<Integer, Integer[]> tabela = buscaProfundidade(1);
-		for(Integer[] vertice: tabela.values()) {
-			if(vertice[0] == Integer.MAX_VALUE) {
-				System.out.println(0);
-				return 0;
+	public boolean ehConexo() {
+		int vertice = 1;
+		HashMap<Integer, Integer[]> tabela = new HashMap<>();
+		ArrayList<Integer> restantes = new ArrayList<>();
+		for(int v: grafo.keySet()) {
+			Integer[] setup = {Integer.MAX_VALUE, -1, -1};
+			tabela.put(v, setup);
+			restantes.add(v);
+		}
+		
+		tabela.get(vertice)[0] = 0;
+		tabela.get(vertice)[2] = 1;
+		int tempo = 0;
+		
+		Stack<Integer> pilha = new Stack<>();
+		pilha.push(vertice);
+		
+		while(!pilha.empty()) {
+			tempo++;
+			int antecessor = pilha.pop();
+			Integer ant = (Integer) antecessor;
+			restantes.remove(ant);
+			tabela.get(antecessor)[0] = tempo;
+			for(int i: grafo.get(antecessor).keySet()) {
+				if(tabela.get(i)[2] < 0) {
+					tabela.get(i)[2] = 1;
+					tabela.get(i)[1] = antecessor;
+					pilha.push(i);
+				}
 			}
 		}
+		return restantes.isEmpty();
+	}
+	
+	public int euleriano() {
 		for(Integer vertice: grafo.keySet()) {
 			if(grafo.get(vertice).size() % 2 == 1) {
 				System.out.println(0);
 				return 0;
 			}
 		}
+		if(!ehConexo()) {
+			System.out.println(0);
+			return 0;
+		}
 		System.out.println(1);
+		HashMap<Integer, ArrayList<Integer>> auxiliar = new HashMap<>();
+		for(Integer vertice: grafo.keySet()) {
+			auxiliar.put(vertice, new ArrayList<>());
+			for(Integer vizinho: grafo.get(vertice).keySet()) {
+				auxiliar.get(vertice).add(vizinho);
+			}
+		}
+		Stack<Integer> pilha = new Stack<>();
+		ArrayList<Integer> circuito = new ArrayList<>();
+		int verticeAtual = 1;
+		pilha.push(verticeAtual);
+		
+		while(!pilha.isEmpty()) {
+			
+			if(!auxiliar.get(verticeAtual).isEmpty()) {
+				pilha.add(verticeAtual);
+				int proximoVertice = auxiliar.get(verticeAtual).remove(0);
+				Integer vAtual = (Integer) verticeAtual;
+				auxiliar.get(proximoVertice).remove(vAtual);
+				verticeAtual = proximoVertice;
+			} else {
+				circuito.add(verticeAtual);
+				verticeAtual = pilha.pop();
+			}
+		}
+
+		for(int i = 0; i < circuito.size() -1; i++) {
+			System.out.print(circuito.get(i) + ",");
+		}
+		System.out.println(circuito.get(circuito.size() - 1));
+		
 		return 1;
 	}
+	
 	
 	
 	
