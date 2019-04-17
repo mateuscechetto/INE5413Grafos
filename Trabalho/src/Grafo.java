@@ -293,7 +293,18 @@ public class Grafo implements IGrafo {
 		
 		for(int key: tabela.keySet()) {
 			System.out.print(rotulos[key - 1] + ": ");
-			System.out.println(tabela.get(key).getVertice() + " d=" + tabela.get(key).getDistancia());
+			ArrayList<Integer> caminhoInvertido = new ArrayList<>();
+			Integer v = tabela.get(key).getVertice();
+			caminhoInvertido.add(key);
+			while(v != -1) {
+				caminhoInvertido.add(v);
+				v = tabela.get(v).getVertice();
+			}
+			for(int i = caminhoInvertido.size() - 1; i > 0; i--) {
+				System.out.print(caminhoInvertido.get(i) + ",");
+			}
+			System.out.print(caminhoInvertido.get(0) + ";");
+			System.out.println(" d=" + tabela.get(key).getDistancia());
 		}
 
 	}
