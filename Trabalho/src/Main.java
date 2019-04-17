@@ -24,5 +24,6 @@ public class Main {
 //		g.buscaLargura(2);
 //		g.euleriano();
 		g.floydWarshall();
+		g.dijkstra(2);
 	}
 }

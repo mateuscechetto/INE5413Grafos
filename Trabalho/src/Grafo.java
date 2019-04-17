@@ -4,8 +4,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Stack;
 
 public class Grafo implements IGrafo {
@@ -257,6 +259,46 @@ public class Grafo implements IGrafo {
 		return 1;
 	}
 	
+	public void dijkstra(int vertice) {
+		HashMap<Integer, Data> tabela = new HashMap<>();
+		for(int v: grafo.keySet()) {
+			Data setup = new Data(Double.MAX_VALUE, -1);
+			tabela.put(v, setup);
+		}
+		PriorityQueue<Data> pq = new PriorityQueue<>(new Comparator<Data>() {
+			@Override
+			public int compare(Data arg0, Data arg1) {
+				return (int) (arg0.getDistancia() - arg1.getDistancia());
+			}
+		});
+		ArrayList<Integer> jaAdicionados = new ArrayList<>();
+		tabela.get(vertice).setDistancia(0);
+		
+		Data added = new Data(tabela.get(vertice).getDistancia(), vertice);
+		pq.add(added);
+		jaAdicionados.add(vertice);
+		
+		while(!pq.isEmpty()) {
+			Data u = pq.poll();
+			for(Integer v: grafo.get(u.getVertice()).keySet()) {
+				if(jaAdicionados.contains(v)) continue;
+				double value = u.getDistancia() + grafo.get(u.getVertice()).get(v);
+				if(tabela.get(v).getDistancia() > value) {
+					tabela.get(v).setDistancia(value);
+					tabela.get(v).setVertice(u.getVertice());
+					pq.add(new Data(tabela.get(v).getDistancia(), v));
+				}
+			}
+		}
+		
+		for(int key: tabela.keySet()) {
+			System.out.print(rotulos[key - 1] + ": ");
+			System.out.println(tabela.get(key).getVertice() + " d=" + tabela.get(key).getDistancia());
+		}
+
+	}
+	
+	
 	public void floydWarshall() {
 		double[][] matriz = new double[grafo.size()][grafo.size()];
 		for(int k: grafo.keySet()) {
@@ -264,7 +306,7 @@ public class Grafo implements IGrafo {
 				if(grafo.get(k).keySet().contains(i)) {
 					matriz[k - 1][i - 1] = grafo.get(k).get(i);
 				} else {
-					matriz[k - 1][i - 1] = 9999999;
+					matriz[k - 1][i - 1] = Double.MAX_VALUE;
 				}
 			}
 		}
@@ -299,7 +341,27 @@ public class Grafo implements IGrafo {
 		}
 	}
 	
-	
+	private class Data {
+		double distancia;
+		int vertice;		
+		public Data(double distancia, int vertice) {
+			this.distancia = distancia;
+			this.vertice = vertice;
+		}
+		public double getDistancia() {
+			return distancia;
+		}
+		public void setDistancia(double distancia) {
+			this.distancia = distancia;
+		}
+		public int getVertice() {
+			return vertice;
+		}
+		public void setVertice(int vertice) {
+			this.vertice = vertice;
+		}
+		
+	}
 	
 	
 	
