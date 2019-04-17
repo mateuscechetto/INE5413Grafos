@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Stack;
@@ -29,6 +30,9 @@ public class Grafo implements IGrafo {
 				auxiliar = linha.split(" ");
 				vertices[i] = Integer.parseInt(auxiliar[0]);
 				rotulos[i] = auxiliar[1];
+				for(int j = 2; j < auxiliar.length; j++) {
+					rotulos[i] += " " + auxiliar[j];
+				}
 			}
 			linha = lerArq.readLine();
 			ArrayList<Integer[]> arestas = new ArrayList<>();
@@ -217,6 +221,7 @@ public class Grafo implements IGrafo {
 			System.out.println(0);
 			return 0;
 		}
+		
 		System.out.println(1);
 		HashMap<Integer, ArrayList<Integer>> auxiliar = new HashMap<>();
 		for(Integer vertice: grafo.keySet()) {
@@ -251,6 +256,49 @@ public class Grafo implements IGrafo {
 		
 		return 1;
 	}
+	
+	public void floydWarshall() {
+		double[][] matriz = new double[grafo.size()][grafo.size()];
+		for(int k: grafo.keySet()) {
+			for(int i = 1; i <= matriz.length; i++) {
+				if(grafo.get(k).keySet().contains(i)) {
+					matriz[k - 1][i - 1] = grafo.get(k).get(i);
+				} else {
+					matriz[k - 1][i - 1] = 9999999;
+				}
+			}
+		}
+		//imprimeMatriz(matriz);
+		for(int k: grafo.keySet()) {
+			for(int u: grafo.keySet()) {
+				for(int v: grafo.keySet()) {
+					if(u == v) {
+						matriz[u - 1][v - 1] = 0;
+					} else {
+						matriz[u - 1][v - 1] = Math.min(matriz[u - 1][v - 1], matriz[u - 1][k - 1] + matriz[k - 1][v - 1]);
+					}
+				}
+			}
+		}
+		for (int i = 0; i < matriz.length; i++) {
+			System.out.print(rotulo(i + 1) + ": ");
+			for (int j = 0; j < matriz[i].length; j++) {
+				System.out.print(matriz[i][j] + ",");
+			}
+	    System.out.println();
+		}
+		//imprimeMatriz(matriz);
+	}
+	
+	private void imprimeMatriz(double[][] matriz) {
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz[i].length; j++) {
+				System.out.print(matriz[i][j] + " ");
+			}
+	    System.out.println();
+		}
+	}
+	
 	
 	
 	
